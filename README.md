@@ -1,5 +1,7 @@
 # GitHub Tag Action
 
+Fork off mathieudutour/github-tag-action adding a manual mode rather than depending on commit analysis to determine version bump
+
 A GitHub Action to automatically bump and tag master, on merge, with the latest SemVer formatted version. Works on any platform.
 
 ## Usage
