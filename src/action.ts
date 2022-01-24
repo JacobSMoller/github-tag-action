@@ -147,13 +147,14 @@ export default async function main() {
 
     if (manualMode === 'true') {
       if (manualModeBump === '') {
-        core.debug(
+        core.setFailed(
           "Can't use manual mode without setting manual_mode_bump to one of patch|minor|major"
         );
         return;
       }
       shouldContinue = true;
       bump = manualModeBump;
+      core.info(`Manual bump version: ${bump}.`);
     }
 
     // Default bump is set to false and we did not find an automatic bump
