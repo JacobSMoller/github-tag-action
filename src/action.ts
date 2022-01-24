@@ -30,6 +30,8 @@ export default async function main() {
   const customReleaseRules = core.getInput('custom_release_rules');
   const shouldFetchAllTags = core.getInput('fetch_all_tags');
   const commitSha = core.getInput('commit_sha');
+  const manualMode = core.getInput('manual_mode');
+  const manualModeBump = core.getInput('manual_mode_bump');
 
   let mappedReleaseRules;
   if (customReleaseRules) {
@@ -125,7 +127,7 @@ export default async function main() {
       {
         releaseRules: mappedReleaseRules
           ? // analyzeCommits doesn't appreciate rules with a section /shrug
-            mappedReleaseRules.map(({ section, ...rest }) => ({ ...rest }))
+          mappedReleaseRules.map(({ section, ...rest }) => ({ ...rest }))
           : undefined,
       },
       { commits, logger: { log: console.info.bind(console) } }
@@ -141,6 +143,17 @@ export default async function main() {
       if (!bump && defaultBump === 'false') {
         shouldContinue = false;
       }
+    }
+
+    if (manualMode === 'true') {
+      if (manualModeBump === '') {
+        core.debug(
+          "Can't use manual mode without setting manual_mode_bump to one of patch|minor|major"
+        );
+        return;
+      }
+      shouldContinue = true;
+      bump = manualModeBump;
     }
 
     // Default bump is set to false and we did not find an automatic bump
