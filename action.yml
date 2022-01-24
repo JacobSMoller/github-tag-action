@@ -1,4 +1,4 @@
-name: "GitHub Tag"
+name: "GitHub Manual Tag"
 description: "Bump and push git tag on merge"
 author: "Mathieu Dutour"
 outputs:
@@ -59,6 +59,14 @@ inputs:
     description: "Do not perform tagging, just calculate next version and changelog, then exit."
     required: false
     default: "false"
+  manual_mode:
+    description: "Allow user to manually input which bump level to use"
+    required: false
+    default: "false"
+  manual_mode_bump:
+      description: "To be used with manual_mode, indicates the level of the bump to perform"
+      required: false
+      default: ""
 
 runs:
   using: "node12"
